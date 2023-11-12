@@ -50,12 +50,12 @@ function LoginForm({ form, onsubmitForm }: LoginFormProps): React.ReactElement {
           }}
         >
           <Grid item xs={12}>
-            <Typography noWrap>
-              <Link href="#">{"¿Olvidaste tu contraseña"}</Link>
+            <Typography noWrap variant="subtitle1">
+              <Link href="#">{"¿Olvidaste tu contraseña?"}</Link>
             </Typography>
           </Grid>
           <Grid item xs={12}>
-            <Typography noWrap>
+            <Typography noWrap variant="subtitle1">
               {"¿No tienes cuenta? "}
               <Link href="#">{"Registrate"}</Link>
             </Typography>

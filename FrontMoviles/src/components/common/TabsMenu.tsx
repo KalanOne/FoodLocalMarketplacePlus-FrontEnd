@@ -6,12 +6,12 @@ interface TabsMenuProps {
   pageId: number;
 }
 
-function TabsMenu({pageId}: TabsMenuProps): React.ReactElement {
+function TabsMenu({ pageId }: TabsMenuProps): React.ReactElement {
   const [value, setValue] = useState(pageId ?? 0);
   const navigate = useNavigate();
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
     setValue(newValue);
-    navigate(`/`);
+    navigate(`/home`);
     console.log(newValue);
   };
   return (

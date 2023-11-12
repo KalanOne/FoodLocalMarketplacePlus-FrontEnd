@@ -5,8 +5,10 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import LoginForm from "./LoginForm";
 import { Avatar, Box, Grid, Paper, Typography } from "@mui/material";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
+import { useNavigate } from "react-router-dom";
 
 function LogIn(): React.ReactElement {
+  const navigate = useNavigate();
   const loginForm = useForm({
     defaultValues: loginDefaultValues,
     resolver: zodResolver(loginSchema),
@@ -16,7 +18,7 @@ function LogIn(): React.ReactElement {
       <Grid container>
         <Paper
           elevation={10}
-          sx={{ padding: 3, height: "70vh", width: 380, margin: "50px auto" }}
+          sx={{ padding: 3, width: 380, margin: "50px auto" }}
         >
           <Box
             sx={{
@@ -37,7 +39,7 @@ function LogIn(): React.ReactElement {
               <Avatar sx={{ background: "green" }}>
                 <LockOutlinedIcon />
               </Avatar>
-              <Typography noWrap variant="h6">
+              <Typography noWrap variant="h6" sx={{mt:1}}>
                 {"LogIn"}
               </Typography>
             </Grid>
@@ -47,6 +49,7 @@ function LogIn(): React.ReactElement {
             onsubmitForm={() => {
               loginForm.handleSubmit((data) => {
                 console.log(data);
+                navigate(`/home`);
               })();
             }}
           />
