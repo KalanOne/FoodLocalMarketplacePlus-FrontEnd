@@ -1,18 +1,28 @@
 import React from "react";
 import { FormProvider, UseFormReturn } from "react-hook-form";
-import { LoginSchemaType } from "../validation/loginForm";
 import { FormTextInput } from "../../../components/form/FormTextInput";
-import { Button, Grid, Link, Typography } from "@mui/material";
+import { Button, Grid } from "@mui/material";
+import { RegisterSchemaType } from "../validation/registerForm";
 
-interface LoginFormProps {
-  form: UseFormReturn<LoginSchemaType>;
+interface RegisterFormProps {
+  form: UseFormReturn<RegisterSchemaType>;
   onsubmitForm: () => void;
 }
 
-function LoginForm({ form, onsubmitForm }: LoginFormProps): React.ReactElement {
+function RegisterForm({
+  form,
+  onsubmitForm,
+}: RegisterFormProps): React.ReactElement {
   return (
     <FormProvider {...form}>
       <Grid container spacing={2}>
+        <Grid item xs={12}>
+          <FormTextInput
+            sx={{ width: "100%" }}
+            name={"name"}
+            label={"Nombre"}
+          />
+        </Grid>
         <Grid item xs={12}>
           <FormTextInput
             sx={{ width: "100%" }}
@@ -26,6 +36,21 @@ function LoginForm({ form, onsubmitForm }: LoginFormProps): React.ReactElement {
             name={"password"}
             label={"Contraseña"}
             inputProps={{ type: "password" }}
+          />
+        </Grid>
+        <Grid item xs={12}>
+          <FormTextInput
+            sx={{ width: "100%" }}
+            name={"email"}
+            label={"Correo Electrónico"}
+            inputProps={{ type: "email" }}
+          />
+        </Grid>
+        <Grid item xs={12}>
+          <FormTextInput
+            sx={{ width: "100%" }}
+            name={"cellphone"}
+            label={"Teléfono"}
           />
         </Grid>
         <Grid item xs={12}>
@@ -43,28 +68,12 @@ function LoginForm({ form, onsubmitForm }: LoginFormProps): React.ReactElement {
             onClick={onsubmitForm}
             fullWidth
           >
-            Iniciar Sesión
+            Registrar
           </Button>
-        </Grid>
-        <Grid
-          item
-          xs={12}
-          sx={{
-            alignItems: "center",
-            justifyContent: "center",
-            display: "flex",
-            flexDirection: "column",
-          }}
-        >
-          <Grid item xs={12}>
-            <Typography noWrap variant="subtitle1">
-              <Link href="#">{"¿Olvidaste tu contraseña?"}</Link>
-            </Typography>
-          </Grid>
         </Grid>
       </Grid>
     </FormProvider>
   );
 }
 
-export default LoginForm;
+export default RegisterForm;

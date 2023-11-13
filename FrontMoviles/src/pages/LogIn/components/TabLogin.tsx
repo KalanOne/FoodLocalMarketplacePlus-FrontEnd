@@ -1,18 +1,26 @@
 import { Tab, Tabs } from "@mui/material";
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
 
-interface TabsMenuProps {
+interface TabLoginProps {
   pageId: number;
+  onChangeTab: (value: boolean) => void;
 }
 
-function TabsMenu({ pageId }: TabsMenuProps): React.ReactElement {
+function TabLogin({ pageId, onChangeTab }: TabLoginProps): React.ReactElement {
   const [value, setValue] = useState(pageId ?? 0);
-  const navigate = useNavigate();
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
     setValue(newValue);
-    navigate(`/home`);
     console.log(newValue);
+    switch (newValue) {
+      case 0:
+        onChangeTab(true);
+        break;
+      case 1:
+        onChangeTab(false);
+        break;
+      default:
+        break;
+    }
   };
   return (
     <>
@@ -22,15 +30,15 @@ function TabsMenu({ pageId }: TabsMenuProps): React.ReactElement {
         textColor="inherit"
         TabIndicatorProps={{
           style: {
-            backgroundColor: "white",
+            backgroundColor: "#EF2F29",
           },
         }}
       >
-        <Tab label="Agregar Producto " />
-        <Tab label="Ver Productos " />
+        <Tab label="Iniciar Sesión" />
+        <Tab label="Registro" />
       </Tabs>
     </>
   );
 }
 
-export default TabsMenu;
+export default TabLogin;

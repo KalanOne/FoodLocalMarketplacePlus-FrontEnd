@@ -1,4 +1,4 @@
-import { AppBar, Box, Toolbar, Typography } from "@mui/material";
+import { AppBar, Box, Paper, Toolbar, Typography } from "@mui/material";
 import React, { useRef } from "react";
 
 interface ContainerProps {
@@ -26,6 +26,7 @@ function Container({ title, children }: ContainerProps): React.ReactElement {
             top: 0,
             height: "64px",
             boxShadow: "none",
+            backgroundColor: "#EF2F29",
           }}
         >
           <Toolbar>
@@ -42,13 +43,15 @@ function Container({ title, children }: ContainerProps): React.ReactElement {
             ></Box>
           </Toolbar>
         </AppBar>
-        <Box
-          sx={{
-            paddingBottom: "64px",
-            width: "100%",
-          }}
-        >
-          {children}
+        <Box sx={{ padding: 1, width: "100%" }}>
+          <Paper
+            elevation={10}
+            sx={{
+              backgroundColor: "#E9E9E9",
+            }}
+          >
+            {children}
+          </Paper>
         </Box>
       </Box>
     </>
