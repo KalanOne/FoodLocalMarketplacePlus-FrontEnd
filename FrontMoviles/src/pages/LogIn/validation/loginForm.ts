@@ -4,18 +4,18 @@ export { loginSchema, loginDefaultValues };
 export type { LoginSchemaType };
 
 const loginSchema = z.object({
-  username: z.string().min(1, "El nombre es requerido"),
+  email: z.string().email("Correo no válido"),
   password: z.string().min(1, "La contraseña es requerida"),
 });
 
 type LoginSchemaType = z.infer<typeof loginSchema>;
 
 interface LoginDefaultValues {
-  username: string;
+  email: string;
   password: string;
 }
 
 const loginDefaultValues: LoginDefaultValues = {
-  username: "",
+  email: "",
   password: "",
 };

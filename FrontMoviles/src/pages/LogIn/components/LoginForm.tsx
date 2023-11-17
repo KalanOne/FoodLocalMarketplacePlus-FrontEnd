@@ -16,7 +16,7 @@ function LoginForm({ form, onsubmitForm }: LoginFormProps): React.ReactElement {
         <Grid item xs={12}>
           <FormTextInput
             sx={{ width: "100%" }}
-            name={"username"}
+            name={"email"}
             label={"Nombre de Usuario"}
           />
         </Grid>

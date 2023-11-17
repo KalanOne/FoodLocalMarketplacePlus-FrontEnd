@@ -4,7 +4,7 @@ import { loginDefaultValues, loginSchema } from "../validation/loginForm";
 import { zodResolver } from "@hookform/resolvers/zod";
 import LoginForm from "./LoginForm";
 import { Box, Grid, Paper } from "@mui/material";
-import { useNavigate } from "react-router-dom";
+// import { useNavigate } from "react-router-dom";
 import TabLogin from "./TabLogin";
 import LogoInicio from "../../../assets/LogoInicio.png";
 import {
@@ -12,10 +12,21 @@ import {
   registerSchema,
 } from "../validation/registerForm";
 import RegisterForm from "./RegisterForm";
+import { loginPost } from "../api/apiLogin";
+import { mutationFood } from "../../../api/mutation";
 
 function LogIn(): React.ReactElement {
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
   const [logIn, setLogIn] = useState(true);
+  const [data, setData] = useState();
+
+  const loginMutation = mutationFood(loginPost, "login", {
+    onSuccess: (data) => {
+      setData(data);
+      // navigate(`/home`);
+    },
+  });
+
   const loginForm = useForm({
     defaultValues: loginDefaultValues,
     resolver: zodResolver(loginSchema),
@@ -30,6 +41,10 @@ function LogIn(): React.ReactElement {
     loginForm.reset();
     registerForm.reset();
   }
+
+  useEffect(() => {
+    console.log(data);
+  }, [data]);
 
   return (
     <>
@@ -63,7 +78,8 @@ function LogIn(): React.ReactElement {
                 onsubmitForm={() => {
                   loginForm.handleSubmit((data) => {
                     console.log(data);
-                    navigate(`/home`);
+                    loginMutation.mutate(data);
+                    // navigate(`/home`);
                   })();
                 }}
               />
@@ -73,7 +89,7 @@ function LogIn(): React.ReactElement {
                 onsubmitForm={() => {
                   registerForm.handleSubmit((data) => {
                     console.log(data);
-                    navigate(`/home`);
+                    // navigate(`/home`);
                   })();
                 }}
               />
