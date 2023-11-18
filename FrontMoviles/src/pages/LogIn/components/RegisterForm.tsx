@@ -1,8 +1,9 @@
 import React from "react";
 import { FormProvider, UseFormReturn } from "react-hook-form";
 import { FormTextInput } from "../../../components/form/FormTextInput";
-import { Button, Grid } from "@mui/material";
+import { Button, Grid, MenuItem } from "@mui/material";
 import { RegisterSchemaType } from "../validation/registerForm";
+import { FormSelectInput } from "../../../components/form/FormSelectInput";
 
 interface RegisterFormProps {
   form: UseFormReturn<RegisterSchemaType>;
@@ -19,15 +20,9 @@ function RegisterForm({
         <Grid item xs={12}>
           <FormTextInput
             sx={{ width: "100%" }}
-            name={"name"}
-            label={"Nombre"}
-          />
-        </Grid>
-        <Grid item xs={12}>
-          <FormTextInput
-            sx={{ width: "100%" }}
-            name={"username"}
-            label={"Nombre de Usuario"}
+            name={"email"}
+            label={"Correo Electrónico"}
+            inputProps={{ type: "email" }}
           />
         </Grid>
         <Grid item xs={12}>
@@ -39,11 +34,16 @@ function RegisterForm({
           />
         </Grid>
         <Grid item xs={12}>
+          <FormSelectInput name={"type"} label={"Tipo"} required={true}>
+            <MenuItem value="proveedor">{"Proveedor"}</MenuItem>
+            <MenuItem value="restaurante">{"Restaurante"}</MenuItem>
+          </FormSelectInput>
+        </Grid>
+        <Grid item xs={12}>
           <FormTextInput
             sx={{ width: "100%" }}
-            name={"email"}
-            label={"Correo Electrónico"}
-            inputProps={{ type: "email" }}
+            name={"name"}
+            label={"Nombre"}
           />
         </Grid>
         <Grid item xs={12}>
@@ -51,6 +51,58 @@ function RegisterForm({
             sx={{ width: "100%" }}
             name={"cellphone"}
             label={"Teléfono"}
+          />
+        </Grid>
+        <Grid item xs={12}>
+          <FormTextInput
+            sx={{ width: "100%" }}
+            name={"address"}
+            label={"Dirección"}
+          />
+        </Grid>
+        <Grid item xs={12}>
+          <FormTextInput
+            sx={{ width: "100%" }}
+            name={"city"}
+            label={"Ciudad"}
+          />
+        </Grid>
+        <Grid item xs={12}>
+          <FormTextInput
+            sx={{ width: "100%" }}
+            name={"cp"}
+            label={"Código Postal"}
+            inputProps={{ type: "number" }}
+          />
+        </Grid>
+        <Grid item xs={12}>
+          <FormTextInput
+            sx={{ width: "100%" }}
+            name={"state"}
+            label={"Estado"}
+          />
+        </Grid>
+        <Grid item xs={12}>
+          <FormTextInput
+            sx={{ width: "100%" }}
+            name={"country"}
+            label={"País"}
+          />
+        </Grid>
+        <Grid item xs={12}>
+          <FormTextInput
+            sx={{ width: "100%" }}
+            name={"latitud"}
+            label={"Latitud"}
+            inputProps={{ type: "number" }}
+          />
+        </Grid>
+        <Grid item xs={12}>
+          <FormTextInput
+            sx={{ width: "100%" }}
+            name={"longitud"}
+            label={"Longitud"}
+            inputProps={{ type: "number" }}
           />
         </Grid>
         <Grid item xs={12}>

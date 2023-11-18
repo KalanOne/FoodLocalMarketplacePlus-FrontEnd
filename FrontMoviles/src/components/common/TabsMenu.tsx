@@ -1,6 +1,8 @@
 import { Tab, Tabs } from "@mui/material";
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import TabsItem from "./TabsItem";
+import PhoneIcon from "@mui/icons-material/Phone";
 
 interface TabsMenuProps {
   pageId: number;
@@ -8,26 +10,20 @@ interface TabsMenuProps {
 
 function TabsMenu({ pageId }: TabsMenuProps): React.ReactElement {
   const [value, setValue] = useState(pageId ?? 0);
-  const navigate = useNavigate();
-  const handleChange = (event: React.SyntheticEvent, newValue: number) => {
-    setValue(newValue);
-    navigate(`/home`);
-    console.log(newValue);
-  };
   return (
     <>
       <Tabs
         value={value}
-        onChange={handleChange}
         textColor="inherit"
         TabIndicatorProps={{
           style: {
             backgroundColor: "white",
           },
         }}
+        centered
       >
-        <Tab label="Agregar Producto " />
-        <Tab label="Ver Productos " />
+        <TabsItem label="Agregar Producto " href="" />
+        <TabsItem label="Ver Productos " href="" />
       </Tabs>
     </>
   );

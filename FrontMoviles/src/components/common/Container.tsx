@@ -2,11 +2,10 @@ import { AppBar, Box, Paper, Toolbar, Typography } from "@mui/material";
 import React, { useRef } from "react";
 
 interface ContainerProps {
-  title: string;
   children: React.ReactNode;
 }
 
-function Container({ title, children }: ContainerProps): React.ReactElement {
+function Container({ children }: ContainerProps): React.ReactElement {
   const appBarRef = useRef<HTMLElement>(null);
   return (
     <>
@@ -26,33 +25,19 @@ function Container({ title, children }: ContainerProps): React.ReactElement {
             top: 0,
             height: "64px",
             boxShadow: "none",
-            backgroundColor: "#EF2F29",
+            backgroundColor: "black",
           }}
         >
           <Toolbar>
-            <Typography noWrap variant="h6">
-              {title}
-            </Typography>
             <Box
               id={"navbarPortal"}
               sx={{
-                display: "flex",
-                justifyContent: "flex-end",
-                flex: 1,
+                width: "100%",
               }}
             ></Box>
           </Toolbar>
         </AppBar>
-        <Box sx={{ padding: 1, width: "100%" }}>
-          <Paper
-            elevation={10}
-            sx={{
-              backgroundColor: "#E9E9E9",
-            }}
-          >
-            {children}
-          </Paper>
-        </Box>
+        <Box sx={{ width: "100%" }}>{children}</Box>
       </Box>
     </>
   );

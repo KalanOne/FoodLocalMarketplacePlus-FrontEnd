@@ -1,10 +1,10 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { loginDefaultValues, loginSchema } from "../validation/loginForm";
 import { zodResolver } from "@hookform/resolvers/zod";
 import LoginForm from "./LoginForm";
 import { Box, Grid, Paper } from "@mui/material";
-// import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import TabLogin from "./TabLogin";
 import LogoInicio from "../../../assets/LogoInicio.png";
 import {
@@ -12,18 +12,27 @@ import {
   registerSchema,
 } from "../validation/registerForm";
 import RegisterForm from "./RegisterForm";
-import { loginPost } from "../api/apiLogin";
+import { loginPost, registerPost } from "../api/apiLogin";
 import { mutationFood } from "../../../api/mutation";
 
 function LogIn(): React.ReactElement {
-  // const navigate = useNavigate();
+  const navigate = useNavigate();
   const [logIn, setLogIn] = useState(true);
-  const [data, setData] = useState();
 
   const loginMutation = mutationFood(loginPost, "login", {
     onSuccess: (data) => {
-      setData(data);
-      // navigate(`/home`);
+      if (data.error) {
+        alert(data.error);
+      } else {
+        localStorage.setItem("token", data.data);
+        navigate(`/home`);
+      }
+    },
+  });
+
+  const registerMutation = mutationFood(registerPost, "register", {
+    onSuccess: (data) => {
+      navigate(`/`);
     },
   });
 
@@ -41,10 +50,6 @@ function LogIn(): React.ReactElement {
     loginForm.reset();
     registerForm.reset();
   }
-
-  useEffect(() => {
-    console.log(data);
-  }, [data]);
 
   return (
     <>
@@ -65,7 +70,7 @@ function LogIn(): React.ReactElement {
             }}
           >
             <img
-              src={LogoInicio} // Replace with the actual path to your image
+              src={LogoInicio}
               alt="Image Alt Text"
               style={{ width: "50%", maxWidth: 300, height: "auto" }}
             />
@@ -77,9 +82,7 @@ function LogIn(): React.ReactElement {
                 form={loginForm}
                 onsubmitForm={() => {
                   loginForm.handleSubmit((data) => {
-                    console.log(data);
                     loginMutation.mutate(data);
-                    // navigate(`/home`);
                   })();
                 }}
               />
@@ -88,8 +91,21 @@ function LogIn(): React.ReactElement {
                 form={registerForm}
                 onsubmitForm={() => {
                   registerForm.handleSubmit((data) => {
-                    console.log(data);
-                    // navigate(`/home`);
+                    registerMutation.mutate({
+                      email: data.email,
+                      nombre: data.name,
+                      tipo: data.type,
+                      telefono: data.cellphone,
+                      direccion: data.address,
+                      ciudad: data.city,
+                      codigoPostal: data.cp,
+                      estado: data.state,
+                      pais: data.country,
+                      coordY: parseFloat(data.latitud),
+                      coordX: parseFloat(data.longitud),
+                      password: data.password,
+                      profilePic: "providerDefault.png",
+                    });
                   })();
                 }}
               />

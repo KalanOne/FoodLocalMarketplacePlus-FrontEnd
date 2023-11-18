@@ -3,13 +3,41 @@ import { z } from "zod";
 export { registerSchema, registerDefaultValues };
 export type { RegisterSchemaType };
 
+const esNumero = (value: any) => /^[+-]?\d+(\.\d+)?$/.test(value);
+const estaEnRangoLatitud = (value: any) =>
+  -90 <= parseFloat(value) && parseFloat(value) <= 90;
+const estaEnRangoLongitud = (value: any) =>
+  -180 <= parseFloat(value) && parseFloat(value) <= 180;
+
 const registerSchema = z.object({
-  name: z.string().min(1, "El nombre es requerido"),
-  username: z.string().min(1, "El nombre de usuario es requerido"),
   email: z.string().email("Correo no válido"),
-  cellphone: z.string().refine((value) => /^\d{10}$/.test(value), {
-    message: "El número de celular debe tener 10 dígitos",
+  name: z.string().min(1, "El nombre es requerido"),
+  type: z.string().min(1, "El tipo de usuario es requerido"),
+  cellphone: z.string().min(1, "El número de celular es requerido"),
+  address: z.string().min(1, "La dirección es requerida"),
+  city: z.string().min(1, "La ciudad es requerida"),
+  cp: z.string().refine((value) => /^\d{5}$/.test(value), {
+    message:
+      "El código postal debe contener solo números y tener una longitud de 5 caracteres",
   }),
+  state: z.string().min(1, "El estado es requerido"),
+  country: z.string().min(1, "El país es requerido"),
+  latitud: z
+    .string()
+    .refine(esNumero, {
+      message: "La latitud debe ser un número válido",
+    })
+    .refine(estaEnRangoLatitud, {
+      message: "La latitud debe estar en el rango de -90 a 90 grados",
+    }),
+  longitud: z
+    .string()
+    .refine(esNumero, {
+      message: "La longitud debe ser un número válido",
+    })
+    .refine(estaEnRangoLongitud, {
+      message: "La longitud debe estar en el rango de -180 a 180 grados",
+    }),
   password: z
     .string()
     .refine((value) => value.length >= 10, {
@@ -36,7 +64,8 @@ const registerSchema = z.object({
         return !consecutiveDigits;
       },
       {
-        message: "La contraseña debe tener al menos tres dígitos no consecutivos.",
+        message:
+          "La contraseña debe tener al menos tres dígitos no consecutivos.",
       }
     )
     .refine((value) => /[!@#$%^&*(),.?":{}|<>]/.test(value), {
@@ -47,17 +76,31 @@ const registerSchema = z.object({
 type RegisterSchemaType = z.infer<typeof registerSchema>;
 
 interface RegisterDefaultValues {
-  name: string;
-  username: string;
-  password: string;
   email: string;
+  name: string;
+  type: string;
   cellphone: string;
+  address: string;
+  city: string;
+  cp: string;
+  state: string;
+  country: string;
+  latitud: string;
+  longitud: string;
+  password: string;
 }
 
 const registerDefaultValues: RegisterDefaultValues = {
-  name: "",
-  username: "",
-  password: "",
   email: "",
+  name: "",
+  type: "",
   cellphone: "",
+  address: "",
+  city: "",
+  cp: "",
+  state: "",
+  country: "",
+  latitud: "",
+  longitud: "",
+  password: "",
 };
