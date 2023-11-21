@@ -1,24 +1,32 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useNavigate } from "react-router-dom"; // Ajusta según la librería de enrutamiento que estés utilizando
+import { useJwt } from "../stores/jwt";
 
-interface UseAuthRedirectProps {
-  loginPath: string; 
-  indexPath: string; 
+interface IAuthRedirect {
+  origen?: string;
 }
 
-const useAuthRedirect = ({ loginPath, indexPath }: UseAuthRedirectProps) => {
+const useAuthRedirect = ({origen}: IAuthRedirect) => {
   const navigate = useNavigate();
-  const [auth, setAuth] = useState(false);
-
+  const setToken = useJwt((state) => state.setToken);
+  const setCorreo = useJwt((state) => state.setCorreo);
   useEffect(() => {
     const token = localStorage.getItem("token");
-    const redirectPath = token ? indexPath : loginPath;
-    setAuth(token ? true : false);
+    const correo = localStorage.getItem("correo");
+    if (!token) {
+      navigate("/");
+    }else if (origen && origen === "login" && token) {
+      navigate("/home");
+    }
 
-    navigate(redirectPath);
-  }, [navigate, loginPath, indexPath]);
+    if (token) {
+      setToken(token);
+    }
+    if(correo){
+      setCorreo(correo);
+    }
 
-  return auth;
+  }, [navigate]);
 };
 
 export default useAuthRedirect;

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { loginDefaultValues, loginSchema } from "../validation/loginForm";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -12,17 +12,28 @@ import {
   registerSchema,
 } from "../validation/registerForm";
 import RegisterForm from "./RegisterForm";
-import { loginPost, registerPost } from "../api/apiLogin";
+import { categoriasP, loginPost, registerPost } from "../api/apiLogin";
 import { mutationFood } from "../../../api/mutation";
+import useAuthRedirect from "../../../hooks/redirect";
+import { useQuery } from "react-query";
 
 function LogIn(): React.ReactElement {
   const navigate = useNavigate();
   const [logIn, setLogIn] = useState(true);
+  useAuthRedirect({ origen: "login" });
+
+  const categoriasQuery = useQuery({
+    queryKey: ["categorias"],
+    queryFn: async () => {
+      return await categoriasP();
+    },
+  });
+  const categorias = categoriasQuery.data?.data ?? [];
 
   const loginMutation = mutationFood(loginPost, "login", {
     onSuccess: (data) => {
       if (data.error) {
-        alert(data.error);
+        console.log(data.error);
       } else {
         localStorage.setItem("token", data.data);
         navigate(`/home`);
@@ -50,6 +61,10 @@ function LogIn(): React.ReactElement {
     loginForm.reset();
     registerForm.reset();
   }
+
+  useEffect(() => {
+    console.log(categorias);
+  }, [categorias]);
 
   return (
     <>
@@ -89,12 +104,14 @@ function LogIn(): React.ReactElement {
             ) : (
               <RegisterForm
                 form={registerForm}
+                categorias={categorias}
                 onsubmitForm={() => {
                   registerForm.handleSubmit((data) => {
                     registerMutation.mutate({
                       email: data.email,
                       nombre: data.name,
                       tipo: data.type,
+                      idCategoria: data.category,
                       telefono: data.cellphone,
                       direccion: data.address,
                       ciudad: data.city,

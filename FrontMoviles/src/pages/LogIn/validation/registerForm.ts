@@ -13,6 +13,7 @@ const registerSchema = z.object({
   email: z.string().email("Correo no válido"),
   name: z.string().min(1, "El nombre es requerido"),
   type: z.string().min(1, "El tipo de usuario es requerido"),
+  category: z.coerce.number().gte(1, "La categoría es requerida"),
   cellphone: z.string().min(1, "El número de celular es requerido"),
   address: z.string().min(1, "La dirección es requerida"),
   city: z.string().min(1, "La ciudad es requerida"),
@@ -79,6 +80,7 @@ interface RegisterDefaultValues {
   email: string;
   name: string;
   type: string;
+  category: number;
   cellphone: string;
   address: string;
   city: string;
@@ -94,6 +96,7 @@ const registerDefaultValues: RegisterDefaultValues = {
   email: "",
   name: "",
   type: "",
+  category: 0,
   cellphone: "",
   address: "",
   city: "",

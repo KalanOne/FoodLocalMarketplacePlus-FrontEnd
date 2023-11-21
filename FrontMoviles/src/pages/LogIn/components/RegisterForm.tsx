@@ -7,11 +7,13 @@ import { FormSelectInput } from "../../../components/form/FormSelectInput";
 
 interface RegisterFormProps {
   form: UseFormReturn<RegisterSchemaType>;
+  categorias: any[];
   onsubmitForm: () => void;
 }
 
 function RegisterForm({
   form,
+  categorias,
   onsubmitForm,
 }: RegisterFormProps): React.ReactElement {
   return (
@@ -37,6 +39,19 @@ function RegisterForm({
           <FormSelectInput name={"type"} label={"Tipo"} required={true}>
             <MenuItem value="proveedor">{"Proveedor"}</MenuItem>
             <MenuItem value="restaurante">{"Restaurante"}</MenuItem>
+          </FormSelectInput>
+        </Grid>
+        <Grid item xs={12}>
+          <FormSelectInput
+            name={"category"}
+            label={"Categoria"}
+            required={true}
+          >
+            {categorias.map((categoria) => (
+              <MenuItem key={categoria.id} value={categoria.id}>
+                {categoria.nombre}
+              </MenuItem>
+            ))}
           </FormSelectInput>
         </Grid>
         <Grid item xs={12}>

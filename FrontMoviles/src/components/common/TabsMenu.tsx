@@ -1,19 +1,16 @@
-import { Tab, Tabs } from "@mui/material";
-import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Tabs } from "@mui/material";
+import React from "react";
 import TabsItem from "./TabsItem";
-import PhoneIcon from "@mui/icons-material/Phone";
 
 interface TabsMenuProps {
   pageId: number;
 }
 
 function TabsMenu({ pageId }: TabsMenuProps): React.ReactElement {
-  const [value, setValue] = useState(pageId ?? 0);
   return (
     <>
       <Tabs
-        value={value}
+        value={pageId}
         textColor="inherit"
         TabIndicatorProps={{
           style: {
@@ -22,8 +19,8 @@ function TabsMenu({ pageId }: TabsMenuProps): React.ReactElement {
         }}
         centered
       >
-        <TabsItem label="Agregar Producto " href="" />
-        <TabsItem label="Ver Productos " href="" />
+        <TabsItem label="Productos" href="/productos" />
+        <TabsItem label="Pedidos" href="" />
       </Tabs>
     </>
   );

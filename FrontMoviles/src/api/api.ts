@@ -26,7 +26,9 @@ const http = async <T>({
     params,
     data,
     url: `http://localhost:3000/${path}`,
-    headers: {},
+    headers: {
+      Authorization: `Bearer ${await localStorage.getItem("token")}`,
+    },
   };
 
   const response = await axios(request);

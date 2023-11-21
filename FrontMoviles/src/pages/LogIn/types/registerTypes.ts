@@ -4,6 +4,7 @@ interface RegisterData {
   email: string;
   nombre: string;
   tipo: string;
+  idCategoria: number;
   telefono: string;
   direccion: string;
   ciudad: string;
