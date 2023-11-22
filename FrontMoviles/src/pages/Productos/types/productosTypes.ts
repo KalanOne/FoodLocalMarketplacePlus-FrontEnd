@@ -1,4 +1,4 @@
-export type { CrearProducto };
+export type { CrearProducto, CategoriaProducto };
 
 interface CrearProducto {
   nombre: string;
@@ -7,4 +7,9 @@ interface CrearProducto {
   tipo: string;
   imagen: string;
   idCategoria: number;
+}
+
+interface CategoriaProducto {
+  id: number;
+  nombre: string;
 }

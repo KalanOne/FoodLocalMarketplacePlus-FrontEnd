@@ -12,7 +12,7 @@ const useAuthRedirect = ({origen}: IAuthRedirect) => {
   const setCorreo = useJwt((state) => state.setCorreo);
   useEffect(() => {
     const token = localStorage.getItem("token");
-    const correo = localStorage.getItem("correo");
+    const correo = localStorage.getItem("email");
     if (!token) {
       navigate("/");
     }else if (origen && origen === "login" && token) {

@@ -26,22 +26,54 @@ function ProductCard({
   onEdit,
 }: ProductCardProps): React.ReactElement {
   return (
-    <Card sx={{ width: "100%" }}>
+    <Card sx={{ width: "100%", maxHeight: "400px" }}>
       <CardMedia sx={{ height: 240 }} image={imagen} title={nombre} />
       <CardContent>
-        <Typography gutterBottom variant="h5" component="div">
+        <Typography
+          gutterBottom
+          variant="h5"
+          component="div"
+          sx={{
+            overflow: "hidden",
+            textOverflow: "ellipsis",
+            whiteSpace: "nowrap",
+          }}
+        >
           {nombre}
         </Typography>
-        <Typography variant="body1" color="text.secondary">
-          {`$ ${precio}`}
+        <Typography
+          variant="body1"
+          color="text.secondary"
+          sx={{
+            overflow: "hidden",
+            textOverflow: "ellipsis",
+            whiteSpace: "nowrap",
+          }}
+        >
+          {`${precio.toLocaleString("es-MX", {
+            style: "currency",
+            currency: "MXN",
+          })}`}
         </Typography>
-        <Typography variant="body2" color="text.secondary">
+        <Typography
+          variant="body2"
+          color="text.secondary"
+          sx={{
+            overflow: "hidden",
+            textOverflow: "ellipsis",
+            whiteSpace: "nowrap",
+          }}
+        >
           {descripcion}
         </Typography>
       </CardContent>
       <CardActions>
-        <Button size="small" onClick={onDelete}>Eliminar</Button>
-        <Button size="small" onClick={onEdit}>Editar</Button>
+        <Button size="small" onClick={onDelete}>
+          Eliminar
+        </Button>
+        <Button size="small" onClick={onEdit}>
+          Editar
+        </Button>
       </CardActions>
     </Card>
   );

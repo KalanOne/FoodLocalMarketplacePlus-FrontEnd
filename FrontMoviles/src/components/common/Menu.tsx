@@ -60,6 +60,7 @@ interface MenuProps {
 function Menu({ open, onClose }: MenuProps): React.ReactElement {
   const navigate = useNavigate();
   function handleLogout() {
+    localStorage.removeItem("email");
     localStorage.removeItem("token");
     navigate("/");
   }

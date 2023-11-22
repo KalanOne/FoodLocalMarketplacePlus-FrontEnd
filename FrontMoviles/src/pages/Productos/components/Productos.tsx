@@ -1,17 +1,25 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import useAuthRedirect from "../../../hooks/redirect";
 import Container from "../../../components/common/Container";
-import { Grid } from "@mui/material";
+import { Alert, Grid } from "@mui/material";
 import ProductCard from "../../../components/common/ProductCard";
 import { AddFab } from "../../../components/common/AddFab";
 import Modal from "../../../components/common/Modal";
 import { useJwt } from "../../../stores/jwt";
-import { crearProductoDefaultValues, crearProductoSchema } from "../validation/crearProductos";
+import {
+  crearProductoDefaultValues,
+  crearProductoSchema,
+} from "../validation/crearProductos";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import CrearProductoForm from "./ProductosCrearForm";
-import { crearProducto } from "../api/productosApi";
+import {
+  categoriaProducto,
+  crearProducto,
+  getProductos,
+} from "../api/productosApi";
 import { mutationFood } from "../../../api/mutation";
+import { useQuery } from "react-query";
 
 const PRODUCTOS = [
   {
@@ -98,15 +106,36 @@ const PRODUCTOS = [
 
 function Productos(): React.ReactElement {
   useAuthRedirect({});
+  const correo = useJwt((state) => state.correo);
+  const [alerta, setAlerta] = useState(false);
   const [modals, setModals] = useState({
     add: false,
     edit: false,
     delete: false,
   });
 
+  const productosQuery = useQuery({
+    queryKey: ["productos", correo],
+    queryFn: async () => {
+      return await getProductos(correo);
+    },
+    enabled: correo !== undefined && correo !== null,
+  });
+  const productos = productosQuery.data?.data ?? [];
+
+  const categoriasProductosQuery = useQuery({
+    queryKey: ["categorias"],
+    queryFn: async () => {
+      return await categoriaProducto();
+    },
+  });
+  const categorias = categoriasProductosQuery.data?.data ?? [];
+
   const crearProductoMutation = mutationFood(crearProducto, "productos", {
     onSuccess: (data) => {
       console.log(data);
+      setAlerta(true);
+      setModals({ ...modals, add: false });
     },
   });
 
@@ -123,6 +152,10 @@ function Productos(): React.ReactElement {
     setModals({ ...modals, delete: true });
     console.log("Eliminar");
   }
+
+  useEffect(() => {
+    console.log(productos);
+  }, [productos]);
   return (
     <>
       <Modal
@@ -146,25 +179,34 @@ function Productos(): React.ReactElement {
             crearProductoMutation.mutate({
               nombre: data.nombre,
               descripcion: data.descripcion,
-              precio: parseInt(data.precio),
+              precio: data.precio,
               tipo: data.tipo,
-              idCategoria: 1,
+              idCategoria: data.categoriaProducto,
               imagen: "algo/algo",
             });
           })();
         }}
       >
-        <CrearProductoForm form={agregarProductoForm} />
+        <CrearProductoForm form={agregarProductoForm} categorias={categorias} />
       </Modal>
       <Container>
+        {alerta && (
+          <Alert
+            onClose={() => {
+              setAlerta(false);
+            }}
+          >
+            Producto Creado
+          </Alert>
+        )}
         <Grid container spacing={2} sx={{ padding: 5 }}>
-          {PRODUCTOS.map((producto) => (
+          {productos?.map((producto: any) => (
             <Grid item xs={3} key={producto.id}>
               <ProductCard
                 nombre={producto.nombre}
                 precio={producto.precio}
                 descripcion={producto.descripcion}
-                imagen={producto.imagen}
+                imagen={"https://picsum.photos/200/300"}
                 onDelete={onDeletePress}
                 onEdit={onEditPress}
               />

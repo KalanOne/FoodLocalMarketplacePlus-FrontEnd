@@ -33,6 +33,7 @@ function LogIn(): React.ReactElement {
   const loginMutation = mutationFood(loginPost, "login", {
     onSuccess: (data) => {
       if (data.error) {
+        localStorage.removeItem("email");
         console.log(data.error);
       } else {
         localStorage.setItem("token", data.data);
@@ -60,6 +61,10 @@ function LogIn(): React.ReactElement {
     setLogIn(value);
     loginForm.reset();
     registerForm.reset();
+  }
+
+  function saveEmail(email: string) {
+    localStorage.setItem("email", email);
   }
 
   useEffect(() => {
@@ -97,6 +102,7 @@ function LogIn(): React.ReactElement {
                 form={loginForm}
                 onsubmitForm={() => {
                   loginForm.handleSubmit((data) => {
+                    saveEmail(data.email);
                     loginMutation.mutate(data);
                   })();
                 }}
