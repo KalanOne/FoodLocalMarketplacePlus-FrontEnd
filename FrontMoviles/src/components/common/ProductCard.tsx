@@ -7,14 +7,16 @@ import {
   Typography,
 } from "@mui/material";
 import React from "react";
+import { Producto } from "../../pages/Productos/types/productosTypes";
 
 interface ProductCardProps {
   nombre: string;
   precio: number;
   descripcion: string;
   imagen: string;
-  onEdit: () => void;
-  onDelete: () => void;
+  producto: Producto;
+  onEdit: (producto: Producto) => void;
+  onDelete: (producto: Producto) => void;
 }
 
 function ProductCard({
@@ -22,6 +24,7 @@ function ProductCard({
   precio,
   descripcion,
   imagen,
+  producto,
   onDelete,
   onEdit,
 }: ProductCardProps): React.ReactElement {
@@ -68,10 +71,10 @@ function ProductCard({
         </Typography>
       </CardContent>
       <CardActions>
-        <Button size="small" onClick={onDelete}>
+        <Button size="small" onClick={() => onDelete(producto)}>
           Eliminar
         </Button>
-        <Button size="small" onClick={onEdit}>
+        <Button size="small" onClick={() => onEdit(producto)}>
           Editar
         </Button>
       </CardActions>

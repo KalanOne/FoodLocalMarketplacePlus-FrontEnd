@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import useAuthRedirect from "../../../hooks/redirect";
 import Container from "../../../components/common/Container";
-import { Alert, Grid } from "@mui/material";
+import { Alert, Grid, Typography } from "@mui/material";
 import ProductCard from "../../../components/common/ProductCard";
 import { AddFab } from "../../../components/common/AddFab";
 import Modal from "../../../components/common/Modal";
@@ -11,103 +11,34 @@ import {
   crearProductoSchema,
 } from "../validation/crearProductos";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
+import { set, useForm } from "react-hook-form";
 import CrearProductoForm from "./ProductosCrearForm";
 import {
+  actualizarProductos,
   categoriaProducto,
   crearProducto,
+  eliminarProductos,
   getProductos,
 } from "../api/productosApi";
 import { mutationFood } from "../../../api/mutation";
 import { useQuery } from "react-query";
-
-const PRODUCTOS = [
-  {
-    id: 1,
-    nombre: "Producto 1",
-    precio: 1000,
-    descripcion: "Descripcion 1",
-    imagen: "https://picsum.photos/200/300",
-    categoria: "Categoria 1",
-  },
-  {
-    id: 2,
-    nombre: "Producto 2",
-    precio: 2000,
-    descripcion: "Descripcion 2",
-    imagen: "https://picsum.photos/200/300",
-    categoria: "Categoria 2",
-  },
-  {
-    id: 3,
-    nombre: "Producto 3",
-    precio: 3000,
-    descripcion: "Descripcion 3",
-    imagen: "https://picsum.photos/200/300",
-    categoria: "Categoria 3",
-  },
-  {
-    id: 4,
-    nombre: "Producto 4",
-    precio: 4000,
-    descripcion: "Descripcion 4",
-    imagen: "https://picsum.photos/200/300",
-    categoria: "Categoria 4",
-  },
-  {
-    id: 5,
-    nombre: "Producto 5",
-    precio: 5000,
-    descripcion: "Descripcion 5",
-    imagen: "https://picsum.photos/200/300",
-    categoria: "Categoria 5",
-  },
-  {
-    id: 6,
-    nombre: "Producto 6",
-    precio: 6000,
-    descripcion: "Descripcion 6",
-    imagen: "https://picsum.photos/200/300",
-    categoria: "Categoria 6",
-  },
-  {
-    id: 7,
-    nombre: "Producto 7",
-    precio: 7000,
-    descripcion: "Descripcion 7",
-    imagen: "https://picsum.photos/200/300",
-    categoria: "Categoria 7",
-  },
-  {
-    id: 8,
-    nombre: "Producto 8",
-    precio: 8000,
-    descripcion: "Descripcion 8",
-    imagen: "https://picsum.photos/200/300",
-    categoria: "Categoria 8",
-  },
-  {
-    id: 9,
-    nombre: "Producto 9",
-    precio: 9000,
-    descripcion: "Descripcion 9",
-    imagen: "https://picsum.photos/200/300",
-    categoria: "Categoria 9",
-  },
-  {
-    id: 10,
-    nombre: "Producto 10",
-    precio: 10000,
-    descripcion: "Descripcion 10",
-    imagen: "https://picsum.photos/200/300",
-    categoria: "Categoria 10",
-  },
-];
+import {
+  actualizarProductoDefaultValues,
+  actualizarProductoSchema,
+} from "../validation/updateProducto";
+import ActualizarProductoForm from "./ProductoActualizarForm";
+import { Producto } from "../types/productosTypes";
 
 function Productos(): React.ReactElement {
   useAuthRedirect({});
   const correo = useJwt((state) => state.correo);
-  const [alerta, setAlerta] = useState(false);
+  const [currentProduct, setCurrentProduct] = useState<Producto>();
+  const [currentDelete, setCurrentDelete] = useState<Producto>();
+  const [alerta, setAlerta] = useState({
+    add: false,
+    edit: false,
+    delete: false,
+  });
   const [modals, setModals] = useState({
     add: false,
     edit: false,
@@ -132,42 +63,114 @@ function Productos(): React.ReactElement {
   const categorias = categoriasProductosQuery.data?.data ?? [];
 
   const crearProductoMutation = mutationFood(crearProducto, "productos", {
-    onSuccess: (data) => {
-      console.log(data);
-      setAlerta(true);
+    onSuccess: () => {
+      setAlerta({ ...alerta, add: true });
       setModals({ ...modals, add: false });
     },
   });
+  const actualizarProductoMutation = mutationFood(
+    actualizarProductos,
+    "productos",
+    {
+      onSuccess: () => {
+        setAlerta({ ...alerta, edit: true });
+        setModals({ ...modals, edit: false });
+        setCurrentProduct(undefined);
+      },
+    }
+  );
+  const eliminarProductoMutation = mutationFood(
+    eliminarProductos,
+    "productos",
+    {
+      onSuccess: () => {
+        setAlerta({ ...alerta, delete: true });
+        setModals({ ...modals, delete: false });
+        setCurrentDelete(undefined);
+      },
+    }
+  );
 
   const agregarProductoForm = useForm({
     defaultValues: crearProductoDefaultValues,
     resolver: zodResolver(crearProductoSchema),
   });
+  const actualizarProductoForm = useForm({
+    defaultValues: actualizarProductoDefaultValues,
+    resolver: zodResolver(actualizarProductoSchema),
+  });
 
-  function onEditPress() {
+  function onEditPress(producto: Producto) {
+    setCurrentProduct(producto);
     setModals({ ...modals, edit: true });
-    console.log("Editar");
   }
-  function onDeletePress() {
+  function onDeletePress(producto: Producto) {
+    setCurrentDelete(producto);
     setModals({ ...modals, delete: true });
-    console.log("Eliminar");
+  }
+
+  function editOpen() {
+    actualizarProductoForm.setValue("nombre", currentProduct?.nombre ?? "");
+    actualizarProductoForm.setValue(
+      "descripcion",
+      currentProduct?.descripcion ?? ""
+    );
+    actualizarProductoForm.setValue("precio", currentProduct?.precio ?? 0);
+    actualizarProductoForm.setValue("tipo", currentProduct?.tipo ?? "");
+    actualizarProductoForm.setValue(
+      "categoriaProducto",
+      currentProduct?.idCategoria ?? 0
+    );
   }
 
   useEffect(() => {
-    console.log(productos);
-  }, [productos]);
+    if (modals.add) {
+      agregarProductoForm.reset();
+    }
+  }, [modals.add]);
+  useEffect(() => {
+    if (modals.edit) {
+      actualizarProductoForm.reset();
+      editOpen();
+    } else {
+      setCurrentProduct(undefined);
+    }
+  }, [modals.edit]);
   return (
     <>
+      <Modal
+        open={modals.delete}
+        title="Elimiar Producto"
+        size="sm"
+        onClose={() => setModals({ ...modals, delete: false })}
+        onConfirm={() => {
+          eliminarProductoMutation.mutate(currentDelete?.id ?? 0);
+        }}
+      >
+        <Typography variant="h6">{`¿Desea eliminar el producto ${currentDelete?.nombre}?`}</Typography>
+      </Modal>
       <Modal
         open={modals.edit}
         title="Editar Producto"
         size="sm"
         onClose={() => setModals({ ...modals, edit: false })}
         onSave={() => {
-          console.log("Guardar");
+          actualizarProductoForm.handleSubmit((data) => {
+            actualizarProductoMutation.mutate({
+              id: currentProduct?.id ?? 0,
+              nombre: data.nombre,
+              descripcion: data.descripcion,
+              precio: data.precio,
+              tipo: data.tipo,
+              idCategoria: data.categoriaProducto,
+            });
+          })();
         }}
       >
-        <div>Contenido</div>
+        <ActualizarProductoForm
+          form={actualizarProductoForm}
+          categorias={categorias}
+        />
       </Modal>
       <Modal
         open={modals.add}
@@ -182,7 +185,7 @@ function Productos(): React.ReactElement {
               precio: data.precio,
               tipo: data.tipo,
               idCategoria: data.categoriaProducto,
-              imagen: "algo/algo",
+              imagen: "algo/Ruta",
             });
           })();
         }}
@@ -190,23 +193,42 @@ function Productos(): React.ReactElement {
         <CrearProductoForm form={agregarProductoForm} categorias={categorias} />
       </Modal>
       <Container>
-        {alerta && (
+        {alerta.add && (
           <Alert
             onClose={() => {
-              setAlerta(false);
+              setAlerta({ ...alerta, add: false });
             }}
           >
             Producto Creado
           </Alert>
         )}
+        {alerta.edit && (
+          <Alert
+            onClose={() => {
+              setAlerta({ ...alerta, edit: false });
+            }}
+          >
+            Producto Actualizado
+          </Alert>
+        )}
+        {alerta.delete && (
+          <Alert
+            onClose={() => {
+              setAlerta({ ...alerta, delete: false });
+            }}
+          >
+            Producto Eliminado
+          </Alert>
+        )}
         <Grid container spacing={2} sx={{ padding: 5 }}>
-          {productos?.map((producto: any) => (
+          {productos?.map((producto: Producto) => (
             <Grid item xs={3} key={producto.id}>
               <ProductCard
                 nombre={producto.nombre}
                 precio={producto.precio}
                 descripcion={producto.descripcion}
                 imagen={"https://picsum.photos/200/300"}
+                producto={producto}
                 onDelete={onDeletePress}
                 onEdit={onEditPress}
               />

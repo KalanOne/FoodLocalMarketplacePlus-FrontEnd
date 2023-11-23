@@ -1,7 +1,17 @@
 import { http } from "../../../api/api";
-import { CategoriaProducto, CrearProducto } from "../types/productosTypes";
+import {
+  ActualizarProducto,
+  CategoriaProducto,
+  CrearProducto,
+} from "../types/productosTypes";
 
-export { crearProducto, categoriaProducto, getProductos };
+export {
+  crearProducto,
+  categoriaProducto,
+  getProductos,
+  actualizarProductos,
+  eliminarProductos,
+};
 
 async function crearProducto(data: CrearProducto): Promise<any> {
   return await http<any>({
@@ -21,6 +31,21 @@ async function categoriaProducto(): Promise<any> {
 async function getProductos(id: string | null): Promise<any> {
   return await http<CategoriaProducto[]>({
     method: "GET",
+    path: `producto/${id}`,
+  });
+}
+
+async function actualizarProductos(data: ActualizarProducto): Promise<any> {
+  return await http<any[]>({
+    method: "PUT",
+    path: `producto/${data.id}`,
+    data: data,
+  });
+}
+
+async function eliminarProductos(id: number): Promise<any> {
+  return await http<any>({
+    method: "DELETE",
     path: `producto/${id}`,
   });
 }

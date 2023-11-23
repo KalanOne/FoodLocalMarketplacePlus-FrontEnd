@@ -67,10 +67,6 @@ function LogIn(): React.ReactElement {
     localStorage.setItem("email", email);
   }
 
-  useEffect(() => {
-    console.log(categorias);
-  }, [categorias]);
-
   return (
     <>
       <Grid container>
