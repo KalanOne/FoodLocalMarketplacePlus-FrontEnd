@@ -4,9 +4,18 @@ export { crearProductoSchema, crearProductoDefaultValues };
 export type { CrearProductoSchemaType };
 
 const crearProductoSchema = z.object({
-  nombre: z.string().min(1, "Nombre es requerido"),
-  descripcion: z.string().min(1, "La descripcion es requerida"),
-  precio: z.coerce.number().gte(1, "El precio es requerido"),
+  nombre: z
+    .string()
+    .min(1, "Nombre es requerido")
+    .max(64, "El nombre es muy largo"),
+  descripcion: z
+    .string()
+    .min(1, "La descripcion es requerida")
+    .max(256, "La descripcion es muy larga"),
+  precio: z.coerce
+    .number()
+    .gte(1, "El precio es requerido")
+    .lte(10000000, "El precio es muy alto"),
   categoriaProducto: z.coerce.number().min(1, "La categoria es requerida"),
   tipo: z.string().min(1, "El tipo es requerido"),
   // imagen: z.any(),

@@ -11,7 +11,7 @@ import {
   crearProductoSchema,
 } from "../validation/crearProductos";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { set, useForm } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import CrearProductoForm from "./ProductosCrearForm";
 import {
   actualizarProductos,
@@ -28,6 +28,7 @@ import {
 } from "../validation/updateProducto";
 import ActualizarProductoForm from "./ProductoActualizarForm";
 import { Producto } from "../types/productosTypes";
+import { ScrollToTop } from "../../../utils/ScrollToTop";
 
 function Productos(): React.ReactElement {
   useAuthRedirect({});
@@ -66,6 +67,7 @@ function Productos(): React.ReactElement {
     onSuccess: () => {
       setAlerta({ ...alerta, add: true });
       setModals({ ...modals, add: false });
+      ScrollToTop();
     },
   });
   const actualizarProductoMutation = mutationFood(
@@ -76,6 +78,7 @@ function Productos(): React.ReactElement {
         setAlerta({ ...alerta, edit: true });
         setModals({ ...modals, edit: false });
         setCurrentProduct(undefined);
+        ScrollToTop();
       },
     }
   );
@@ -87,6 +90,7 @@ function Productos(): React.ReactElement {
         setAlerta({ ...alerta, delete: true });
         setModals({ ...modals, delete: false });
         setCurrentDelete(undefined);
+        ScrollToTop();
       },
     }
   );

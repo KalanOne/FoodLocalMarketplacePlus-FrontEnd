@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { loginDefaultValues, loginSchema } from "../validation/loginForm";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -43,8 +43,8 @@ function LogIn(): React.ReactElement {
   });
 
   const registerMutation = mutationFood(registerPost, "register", {
-    onSuccess: (data) => {
-      navigate(`/`);
+    onSuccess: () => {
+      onChangeTab(true);
     },
   });
 

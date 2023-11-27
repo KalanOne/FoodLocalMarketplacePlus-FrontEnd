@@ -10,6 +10,8 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 import AddShoppingCartIcon from "@mui/icons-material/AddShoppingCart";
 import LogoutIcon from "@mui/icons-material/Logout";
+import AccountCircleIcon from "@mui/icons-material/AccountCircle";
+import ShopIcon from "@mui/icons-material/Shop";
 
 interface MenuDrawerItemProps {
   name: string;
@@ -67,6 +69,18 @@ function Menu({ open, onClose }: MenuProps): React.ReactElement {
 
   return (
     <Drawer open={open} onClose={onClose}>
+      <List disablePadding>
+        <MenuDrawerItem name={"Perfil"} to="/perfil">
+          <AccountCircleIcon />
+        </MenuDrawerItem>
+      </List>
+
+      <List disablePadding>
+        <MenuDrawerItem name={"Pedidos"} to="/pedidos">
+          <ShopIcon />
+        </MenuDrawerItem>
+      </List>
+
       <List disablePadding>
         <MenuDrawerItem name={"Productos"} to="/productos">
           <AddShoppingCartIcon />
