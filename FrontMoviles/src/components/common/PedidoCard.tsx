@@ -7,13 +7,15 @@ import {
   Typography,
 } from "@mui/material";
 import React from "react";
+import { PedidosType } from "../../pages/Pedidos/types/pedidosTypes";
 
 interface ProductCardProps {
   id: string;
-  estado: number;
-  pagado: string;
+  estado: string;
+  pagado: boolean;
   imagen: string;
-  onEdit: () => void;
+  pedido: PedidosType;
+  onEdit: (pedido: PedidosType) => void;
 }
 
 function PedidoCard({
@@ -21,6 +23,7 @@ function PedidoCard({
   estado,
   pagado,
   imagen,
+  pedido,
   onEdit,
 }: ProductCardProps): React.ReactElement {
   return (
@@ -48,7 +51,17 @@ function PedidoCard({
             whiteSpace: "nowrap",
           }}
         >
-          {`Estado: ${estado}`}
+          {`Estado: ${
+            estado === "pedidoRealizado"
+              ? "Pedido Realizado"
+              : estado === "enviado"
+              ? "Enviado"
+              : estado === "enReparto"
+              ? "En Reparto"
+              : estado === "entregado"
+              ? "Entregado"
+              : ""
+          }`}
         </Typography>
         <Typography
           variant="body2"
@@ -63,7 +76,7 @@ function PedidoCard({
         </Typography>
       </CardContent>
       <CardActions>
-        <Button size="small" onClick={onEdit}>
+        <Button size="small" onClick={() => onEdit(pedido)}>
           Cambiar Estado
         </Button>
       </CardActions>

@@ -14,9 +14,9 @@ function PedidoUpdateForm({ form }: PedidoUpdateFormProps): React.ReactElement {
       <Grid container spacing={2} sx={{ paddingTop: 2 }}>
         <Grid item xs={12}>
           <FormSelectInput name={"estado"} label={"Estado"} required={true}>
-            <MenuItem value="en proceso">{"En proceso"}</MenuItem>
+            <MenuItem value="pedidoRealizado">{"Pedido Realizado"}</MenuItem>
             <MenuItem value="enviado">{"Enviado"}</MenuItem>
-            <MenuItem value="en camino">{"En Camino"}</MenuItem>
+            <MenuItem value="enReparto">{"En Reparto"}</MenuItem>
             <MenuItem value="entregado">{"Entregado"}</MenuItem>
           </FormSelectInput>
         </Grid>
