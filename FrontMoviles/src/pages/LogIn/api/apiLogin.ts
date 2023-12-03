@@ -17,6 +17,7 @@ async function registerPost(data: RegisterData): Promise<any> {
     method: "POST",
     path: `proveedor/`,
     data: data,
+    // dataWithFiles: true,
   });
 }
 

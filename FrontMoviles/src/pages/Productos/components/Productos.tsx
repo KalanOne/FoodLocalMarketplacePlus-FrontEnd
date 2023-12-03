@@ -190,6 +190,7 @@ function Productos(): React.ReactElement {
               tipo: data.tipo,
               idCategoria: data.categoriaProducto,
               imagen: "algo/Ruta",
+              // imagen: data.image,
             });
           })();
         }}

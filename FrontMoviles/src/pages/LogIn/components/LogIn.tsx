@@ -109,6 +109,7 @@ function LogIn(): React.ReactElement {
                 categorias={categorias}
                 onsubmitForm={() => {
                   registerForm.handleSubmit((data) => {
+                    // console.log(data.image);
                     registerMutation.mutate({
                       email: data.email,
                       nombre: data.name,
@@ -123,7 +124,8 @@ function LogIn(): React.ReactElement {
                       coordY: parseFloat(data.latitud),
                       coordX: parseFloat(data.longitud),
                       password: data.password,
-                      profilePic: "providerDefault.png",
+                      profilePic: "algo/algo",
+                      // profilePic: data.image,
                     });
                   })();
                 }}

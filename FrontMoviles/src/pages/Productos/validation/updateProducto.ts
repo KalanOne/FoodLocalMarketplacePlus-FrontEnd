@@ -18,6 +18,7 @@ const actualizarProductoSchema = z.object({
     .lte(10000000, "El precio es muy alto"),
   categoriaProducto: z.coerce.number().min(1, "La categoria es requerida"),
   tipo: z.string().min(1, "El tipo es requerido"),
+  // image: z.any(),
 });
 
 type ActualizarProductoSchemaType = z.infer<typeof actualizarProductoSchema>;
@@ -28,6 +29,7 @@ interface ActualizarProductoDefaultValues {
   precio: number;
   categoriaProducto: number;
   tipo: string;
+  // image: File | null;
 }
 
 const actualizarProductoDefaultValues: ActualizarProductoDefaultValues = {
@@ -36,4 +38,5 @@ const actualizarProductoDefaultValues: ActualizarProductoDefaultValues = {
   precio: 0,
   categoriaProducto: 0,
   tipo: "",
+  // image: null,
 };

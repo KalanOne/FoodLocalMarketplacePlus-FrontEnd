@@ -39,6 +39,7 @@ const registerSchema = z.object({
     .refine(estaEnRangoLongitud, {
       message: "La longitud debe estar en el rango de -180 a 180 grados",
     }),
+  image: z.any(),
   password: z
     .string()
     .refine((value) => value.length >= 10, {
@@ -90,6 +91,7 @@ interface RegisterDefaultValues {
   latitud: string;
   longitud: string;
   password: string;
+  image: File | null;
 }
 
 const registerDefaultValues: RegisterDefaultValues = {
@@ -106,4 +108,5 @@ const registerDefaultValues: RegisterDefaultValues = {
   latitud: "",
   longitud: "",
   password: "",
+  image: null,
 };

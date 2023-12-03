@@ -1,8 +1,8 @@
-import React, { useEffect } from "react";
+import React from "react";
 import Container from "../../../components/common/Container";
 import { Box, Typography } from "@mui/material";
 import useAuthRedirect from "../../../hooks/redirect";
-import { useJwt } from "../../../stores/jwt";
+import HomeImage from "../../../assets/HomeImage.png";
 
 function Home(): React.ReactElement {
   useAuthRedirect({});
@@ -10,8 +10,17 @@ function Home(): React.ReactElement {
 
   return (
     <Container>
-      <Box component={"div"}>
-        <Typography variant="h6">Bienvenido a la tienda</Typography>
+      <Box
+        component={"div"}
+        sx={{
+          display: "flex",
+          backgroundImage: `url(${HomeImage})`, // Reemplaza con la ruta de tu imagen
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+          height: "100vh",
+        }}
+      >
+        <Typography variant="h6">Bienvenido a PonyFood</Typography>
       </Box>
     </Container>
   );

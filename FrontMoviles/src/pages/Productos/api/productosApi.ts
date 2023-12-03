@@ -18,6 +18,7 @@ async function crearProducto(data: CrearProducto): Promise<any> {
     method: "POST",
     path: `producto/`,
     data: data,
+    // dataWithFiles: true,
   });
 }
 

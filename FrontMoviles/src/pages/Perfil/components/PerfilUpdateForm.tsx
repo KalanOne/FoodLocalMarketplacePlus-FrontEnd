@@ -81,7 +81,7 @@ function PerfilUpdateForm({
             sx={{
               backgroundColor: "#EF2F29",
               paddingY: 1.5,
-              borderRadius: 10,
+              borderRadius: 5,
               "&:hover": {
                 backgroundColor: "#801512",
               },

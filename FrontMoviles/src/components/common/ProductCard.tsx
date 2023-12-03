@@ -8,6 +8,7 @@ import {
 } from "@mui/material";
 import React from "react";
 import { Producto } from "../../pages/Productos/types/productosTypes";
+import { useNavigate } from "react-router-dom";
 
 interface ProductCardProps {
   nombre: string;
@@ -28,9 +29,19 @@ function ProductCard({
   onDelete,
   onEdit,
 }: ProductCardProps): React.ReactElement {
+  const navigate = useNavigate();
+  function onImagePress(id: number) {
+    navigate(`/resena/producto/${id}`);
+  }
+
   return (
     <Card sx={{ width: "100%", maxHeight: "400px" }}>
-      <CardMedia sx={{ height: 240 }} image={imagen} title={nombre} />
+      <CardMedia
+        sx={{ height: 240 }}
+        image={imagen}
+        title={nombre}
+        onClick={() => onImagePress(producto.id)}
+      />
       <CardContent>
         <Typography
           gutterBottom

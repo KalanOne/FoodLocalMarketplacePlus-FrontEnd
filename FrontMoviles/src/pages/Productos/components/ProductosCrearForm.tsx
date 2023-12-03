@@ -5,6 +5,7 @@ import { Button, Grid, Link, MenuItem, Typography } from "@mui/material";
 import { CrearProductoSchemaType } from "../validation/crearProductos";
 import { FormSelectInput } from "../../../components/form/FormSelectInput";
 import { CategoriaProducto } from "../types/productosTypes";
+import FormFileInput from "../../../components/form/FormFileInput";
 
 interface CrearProductoFormProps {
   form: UseFormReturn<CrearProductoSchemaType>;
@@ -58,6 +59,12 @@ function CrearProductoForm({
             <MenuItem value="producto">{"Producto"}</MenuItem>
             <MenuItem value="platillo">{"Platillo"}</MenuItem>
           </FormSelectInput>
+        </Grid>
+        <Grid item xs={12}>
+          <FormFileInput
+            name={"image"}
+            placeholder={"Agregar Imagen"}
+          ></FormFileInput>
         </Grid>
       </Grid>
     </FormProvider>

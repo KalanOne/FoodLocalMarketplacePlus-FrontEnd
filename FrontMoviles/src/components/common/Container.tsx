@@ -1,4 +1,11 @@
-import { AppBar, Box, IconButton, Paper, Toolbar, Typography } from "@mui/material";
+import {
+  AppBar,
+  Box,
+  IconButton,
+  Paper,
+  Toolbar,
+  Typography,
+} from "@mui/material";
 import React, { useRef, useState } from "react";
 import MenuIcon from "@mui/icons-material/Menu";
 import Menu from "./Menu";
@@ -54,7 +61,6 @@ function Container({ children }: ContainerProps): React.ReactElement {
       <Menu open={open} onClose={() => setOpen(false)} />
       <Box
         sx={{
-          paddingBottom: "64px",
           width: "100%",
         }}
       >

@@ -1,4 +1,4 @@
-export type { Proveedor, ActualizarProveedor };
+export type { Proveedor, ActualizarProveedor, ImageProveedor };
 
 interface Proveedor {
   email: string;
@@ -19,7 +19,7 @@ interface Proveedor {
   coordY: number;
 }
 
-interface ActualizarProveedor{
+interface ActualizarProveedor {
   nombre: string;
   telefono: string;
   direccion: string;
@@ -28,4 +28,8 @@ interface ActualizarProveedor{
   estado: string;
   coordX: number;
   coordY: number;
+}
+
+interface ImageProveedor {
+  image: File | null;
 }

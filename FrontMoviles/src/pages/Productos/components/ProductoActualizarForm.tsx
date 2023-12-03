@@ -5,6 +5,7 @@ import { Button, Grid, Link, MenuItem, Typography } from "@mui/material";
 import { FormSelectInput } from "../../../components/form/FormSelectInput";
 import { CategoriaProducto } from "../types/productosTypes";
 import { ActualizarProductoSchemaType } from "../validation/updateProducto";
+import FormFileInput from "../../../components/form/FormFileInput";
 
 interface ActualizarProductoFormProps {
   form: UseFormReturn<ActualizarProductoSchemaType>;

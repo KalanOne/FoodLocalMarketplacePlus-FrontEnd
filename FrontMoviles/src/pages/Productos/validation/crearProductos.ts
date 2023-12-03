@@ -18,7 +18,7 @@ const crearProductoSchema = z.object({
     .lte(10000000, "El precio es muy alto"),
   categoriaProducto: z.coerce.number().min(1, "La categoria es requerida"),
   tipo: z.string().min(1, "El tipo es requerido"),
-  // imagen: z.any(),
+  image: z.any(),
 });
 
 type CrearProductoSchemaType = z.infer<typeof crearProductoSchema>;
@@ -29,7 +29,7 @@ interface CrearProductoDefaultValues {
   precio: number;
   categoriaProducto: number;
   tipo: string;
-  // imagen: File | null;
+  image: File | null;
 }
 
 const crearProductoDefaultValues: CrearProductoDefaultValues = {
@@ -38,5 +38,5 @@ const crearProductoDefaultValues: CrearProductoDefaultValues = {
   precio: 0,
   categoriaProducto: 0,
   tipo: "",
-  // imagen: null,
+  image: null,
 };

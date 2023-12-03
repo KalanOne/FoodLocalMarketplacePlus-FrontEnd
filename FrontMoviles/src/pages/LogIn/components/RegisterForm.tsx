@@ -1,9 +1,10 @@
-import React from "react";
+import React, { useRef } from "react";
 import { FormProvider, UseFormReturn } from "react-hook-form";
 import { FormTextInput } from "../../../components/form/FormTextInput";
-import { Button, Grid, MenuItem } from "@mui/material";
+import { Box, Button, Grid, MenuItem } from "@mui/material";
 import { RegisterSchemaType } from "../validation/registerForm";
 import { FormSelectInput } from "../../../components/form/FormSelectInput";
+import FormFileInput from "../../../components/form/FormFileInput";
 
 interface RegisterFormProps {
   form: UseFormReturn<RegisterSchemaType>;
@@ -16,6 +17,7 @@ function RegisterForm({
   categorias,
   onsubmitForm,
 }: RegisterFormProps): React.ReactElement {
+  const inputRef = useRef<HTMLInputElement | undefined>();
   return (
     <FormProvider {...form}>
       <Grid container spacing={2}>
@@ -119,6 +121,12 @@ function RegisterForm({
             label={"Longitud"}
             inputProps={{ type: "number" }}
           />
+        </Grid>
+        <Grid item xs={12}>
+          <FormFileInput
+            name={"image"}
+            placeholder="Imagen de perfil"
+          ></FormFileInput>
         </Grid>
         <Grid item xs={12}>
           <Button
