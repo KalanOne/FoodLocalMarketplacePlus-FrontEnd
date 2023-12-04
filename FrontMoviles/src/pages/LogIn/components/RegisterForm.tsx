@@ -122,12 +122,12 @@ function RegisterForm({
             inputProps={{ type: "number" }}
           />
         </Grid>
-        <Grid item xs={12}>
+        {/* <Grid item xs={12}>
           <FormFileInput
             name={"image"}
             placeholder="Imagen de perfil"
           ></FormFileInput>
-        </Grid>
+        </Grid> */}
         <Grid item xs={12}>
           <Button
             type={"submit"}

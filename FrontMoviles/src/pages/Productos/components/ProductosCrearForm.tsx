@@ -60,12 +60,12 @@ function CrearProductoForm({
             <MenuItem value="platillo">{"Platillo"}</MenuItem>
           </FormSelectInput>
         </Grid>
-        <Grid item xs={12}>
+        {/* <Grid item xs={12}>
           <FormFileInput
             name={"image"}
             placeholder={"Agregar Imagen"}
           ></FormFileInput>
-        </Grid>
+        </Grid> */}
       </Grid>
     </FormProvider>
   );

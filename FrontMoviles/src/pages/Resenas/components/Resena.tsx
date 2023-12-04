@@ -4,7 +4,7 @@ import useAuthRedirect from "../../../hooks/redirect";
 import { useParams } from "react-router-dom";
 import { useQuery } from "react-query";
 import { getProductoResena } from "../api/resenaApi";
-import { Grid } from "@mui/material";
+import { Grid, Typography } from "@mui/material";
 import ResenaCard from "../../../components/common/ResenaCard";
 
 function Resena(): React.ReactElement {
@@ -21,12 +21,23 @@ function Resena(): React.ReactElement {
 
   return (
     <Container>
+      <Typography
+        variant="h6"
+        sx={{
+          paddingTop: 2,
+          fontSize: "30px",
+          fontWeight: "bold",
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+        }}
+      >
+        Reseñas
+      </Typography>
       <Grid container spacing={2} sx={{ padding: 5 }}>
         {resenas?.map((resena: any) => (
           <Grid item xs={3} key={resena.id}>
-            <ResenaCard
-              resena={resena}
-            />
+            <ResenaCard resena={resena} />
           </Grid>
         ))}
       </Grid>

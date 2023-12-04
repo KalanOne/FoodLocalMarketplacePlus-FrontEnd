@@ -13,7 +13,6 @@ interface ProductCardProps {
   id: string;
   estado: string;
   pagado: boolean;
-  imagen: string;
   pedido: PedidosType;
   onEdit: (pedido: PedidosType) => void;
 }
@@ -22,13 +21,11 @@ function PedidoCard({
   id,
   estado,
   pagado,
-  imagen,
   pedido,
   onEdit,
 }: ProductCardProps): React.ReactElement {
   return (
     <Card sx={{ width: "100%", maxHeight: "400px" }}>
-      <CardMedia sx={{ height: 240 }} image={imagen} title={"Pedido"} />
       <CardContent>
         <Typography
           gutterBottom

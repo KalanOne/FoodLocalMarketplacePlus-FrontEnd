@@ -238,6 +238,19 @@ function Productos(): React.ReactElement {
             Producto Eliminado
           </Alert>
         )}
+        <Typography
+          variant="h6"
+          sx={{
+            paddingTop: 2,
+            fontSize: "30px",
+            fontWeight: "bold",
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
+          Productos
+        </Typography>
         <Grid container spacing={2} sx={{ padding: 5 }}>
           {productos?.map((producto: Producto) => (
             <Grid item xs={3} key={producto.id}>

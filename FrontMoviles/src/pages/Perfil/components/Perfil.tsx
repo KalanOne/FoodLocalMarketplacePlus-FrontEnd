@@ -1,6 +1,14 @@
 import React, { useEffect, useState } from "react";
 import Container from "../../../components/common/Container";
-import { Alert, Box, Button, CardMedia, Grid, Paper } from "@mui/material";
+import {
+  Alert,
+  Box,
+  Button,
+  CardMedia,
+  Grid,
+  Paper,
+  Typography,
+} from "@mui/material";
 import { useQuery } from "react-query";
 import useAuthRedirect from "../../../hooks/redirect";
 import { useJwt } from "../../../stores/jwt";
@@ -114,6 +122,19 @@ function Perfil(): React.ReactElement {
                 Datos Actualizados Con Exito
               </Alert>
             )}
+            <Typography
+              variant="h6"
+              sx={{
+                paddingTop: 2,
+                fontSize: "30px",
+                fontWeight: "bold",
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+            >
+              Perfil
+            </Typography>
             <Grid container sx={{ padding: 5 }} spacing={5}>
               <Grid item xs={4}>
                 <Paper

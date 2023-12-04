@@ -56,11 +56,6 @@ function LoginForm({ form, onsubmitForm }: LoginFormProps): React.ReactElement {
             flexDirection: "column",
           }}
         >
-          <Grid item xs={12}>
-            <Typography noWrap variant="subtitle1">
-              <Link href="#">{"¿Olvidaste tu contraseña?"}</Link>
-            </Typography>
-          </Grid>
         </Grid>
       </Grid>
     </FormProvider>

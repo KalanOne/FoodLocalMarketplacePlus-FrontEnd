@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Container from "../../../components/common/Container";
-import { Grid } from "@mui/material";
+import { Grid, Typography } from "@mui/material";
 import PedidoCard from "../../../components/common/PedidoCard";
 import useAuthRedirect from "../../../hooks/redirect";
 import { useJwt } from "../../../stores/jwt";
@@ -17,6 +17,7 @@ import { actualizarEstado, pedidosProveedor } from "../api/pedidosApi";
 import { PedidosType } from "../types/pedidosTypes";
 import { mutationFood } from "../../../api/mutation";
 import { ScrollToTop } from "../../../utils/ScrollToTop";
+import PedidosTable from "./PedidosTable";
 
 function Pedidos(): React.ReactElement {
   useAuthRedirect({});
@@ -87,7 +88,20 @@ function Pedidos(): React.ReactElement {
         <PedidoUpdateForm form={actualizarEstadoForm} />
       </Modal>
       <Container>
-        <Grid container spacing={2} sx={{ padding: 5 }}>
+        <Typography
+          variant="h6"
+          sx={{
+            paddingTop: 2,
+            fontSize: "30px",
+            fontWeight: "bold",
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
+          Pedidos
+        </Typography>
+        <Grid container spacing={2} sx={{ padding: 4 }}>
           {pedidos.length > 0 &&
             pedidos.map((pedido: any) => (
               <Grid item xs={3} key={pedido.id}>
@@ -95,7 +109,6 @@ function Pedidos(): React.ReactElement {
                   id={pedido.id}
                   estado={pedido.estado}
                   pagado={pedido.pagado}
-                  imagen={"https://picsum.photos/200/300"}
                   pedido={pedido}
                   onEdit={onEditPress}
                 />
