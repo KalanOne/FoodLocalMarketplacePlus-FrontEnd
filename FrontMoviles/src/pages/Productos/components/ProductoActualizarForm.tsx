@@ -1,7 +1,7 @@
 import React from "react";
 import { FormProvider, UseFormReturn } from "react-hook-form";
 import { FormTextInput } from "../../../components/form/FormTextInput";
-import { Button, Grid, Link, MenuItem, Typography } from "@mui/material";
+import { Grid, MenuItem } from "@mui/material";
 import { FormSelectInput } from "../../../components/form/FormSelectInput";
 import { CategoriaProducto } from "../types/productosTypes";
 import { ActualizarProductoSchemaType } from "../validation/updateProducto";
@@ -59,6 +59,9 @@ function ActualizarProductoForm({
             <MenuItem value="producto">{"Producto"}</MenuItem>
             <MenuItem value="platillo">{"Platillo"}</MenuItem>
           </FormSelectInput>
+        </Grid>
+        <Grid item xs={12}>
+          <FormFileInput name={"image"} placeholder={"Actualizar Imagen"} />
         </Grid>
       </Grid>
     </FormProvider>

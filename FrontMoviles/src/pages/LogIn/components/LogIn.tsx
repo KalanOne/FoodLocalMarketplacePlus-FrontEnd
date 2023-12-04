@@ -124,7 +124,7 @@ function LogIn(): React.ReactElement {
                       coordY: parseFloat(data.latitud),
                       coordX: parseFloat(data.longitud),
                       password: data.password,
-                      profilePic: "algo/algo",
+                      profilePic: "algo/Ruta",
                       // profilePic: data.image,
                     });
                   })();

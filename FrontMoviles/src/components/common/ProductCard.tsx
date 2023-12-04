@@ -1,4 +1,5 @@
 import {
+  Box,
   Button,
   Card,
   CardActions,
@@ -35,10 +36,12 @@ function ProductCard({
   }
 
   return (
-    <Card sx={{ width: "100%", maxHeight: "400px" }}>
-      <CardMedia
-        sx={{ height: 240 }}
-        image={imagen}
+    <Card sx={{ width: "100%", maxHeight: "500px" }}>
+      <Box
+        component={"img"}
+        sx={{ height: 300, width: "100%" }}
+        src={imagen}
+        crossOrigin="anonymous"
         title={nombre}
         onClick={() => onImagePress(producto.id)}
       />

@@ -62,6 +62,12 @@ function Pedidos(): React.ReactElement {
     }
   }, [modals.edit]);
 
+  useEffect(() => {
+    if (pedidos.length > 0) {
+      console.log(pedidos);
+    }
+  }, [pedidos]);
+
   return (
     <>
       <Modal

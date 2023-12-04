@@ -3,6 +3,7 @@ import {
   ActualizarProducto,
   CategoriaProducto,
   CrearProducto,
+  ImagenProducto,
 } from "../types/productosTypes";
 
 export {
@@ -11,6 +12,7 @@ export {
   getProductos,
   actualizarProductos,
   eliminarProductos,
+  actualizarImagenProductos
 };
 
 async function crearProducto(data: CrearProducto): Promise<any> {
@@ -48,5 +50,14 @@ async function eliminarProductos(id: number): Promise<any> {
   return await http<any>({
     method: "DELETE",
     path: `producto/${id}`,
+  });
+}
+
+async function actualizarImagenProductos(data: ImagenProducto): Promise<any> {
+  return await http<any[]>({
+    method: "POST",
+    path: `imagen/producto/${data.id}`,
+    data: data,
+    dataWithFiles: true,
   });
 }

@@ -17,11 +17,11 @@ const http = async <T>({
   dataWithFiles = false,
   params = {},
 }: HttpArguments): Promise<T> => {
-  for (const k in params) {
-    if (params[k] === null || params[k] === undefined) {
-      delete params[k];
-    }
-  }
+  // for (const k in params) {
+  //   if (params[k] === null || params[k] === undefined) {
+  //     delete params[k];
+  //   }
+  // }
 
   const request: AxiosRequestConfig = {
     method,

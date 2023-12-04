@@ -14,6 +14,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import CrearProductoForm from "./ProductosCrearForm";
 import {
+  actualizarImagenProductos,
   actualizarProductos,
   categoriaProducto,
   crearProducto,
@@ -94,6 +95,11 @@ function Productos(): React.ReactElement {
       },
     }
   );
+  const actualizarImagen = mutationFood(
+    actualizarImagenProductos,
+    "productos",
+    {}
+  );
 
   const agregarProductoForm = useForm({
     defaultValues: crearProductoDefaultValues,
@@ -160,6 +166,7 @@ function Productos(): React.ReactElement {
         onClose={() => setModals({ ...modals, edit: false })}
         onSave={() => {
           actualizarProductoForm.handleSubmit((data) => {
+            console.log(data.image);
             actualizarProductoMutation.mutate({
               id: currentProduct?.id ?? 0,
               nombre: data.nombre,
@@ -168,6 +175,12 @@ function Productos(): React.ReactElement {
               tipo: data.tipo,
               idCategoria: data.categoriaProducto,
             });
+            if (data.image !== null) {
+              actualizarImagen.mutate({
+                id: currentProduct?.id ?? 0,
+                image: data.image,
+              });
+            }
           })();
         }}
       >
@@ -232,7 +245,14 @@ function Productos(): React.ReactElement {
                 nombre={producto.nombre}
                 precio={producto.precio}
                 descripcion={producto.descripcion}
-                imagen={"https://picsum.photos/200/300"}
+                imagen={
+                  producto.imagen === "algo/Ruta" ||
+                  producto.imagen === "" ||
+                  producto.imagen === null ||
+                  producto.imagen === undefined
+                    ? "https://picsum.photos/200/300"
+                    : `http://localhost:3000${producto.imagen}`
+                }
                 producto={producto}
                 onDelete={onDeletePress}
                 onEdit={onEditPress}

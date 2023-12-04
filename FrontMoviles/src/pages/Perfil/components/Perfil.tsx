@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Container from "../../../components/common/Container";
-import { Alert, Button, CardMedia, Grid, Paper } from "@mui/material";
+import { Alert, Box, Button, CardMedia, Grid, Paper } from "@mui/material";
 import { useQuery } from "react-query";
 import useAuthRedirect from "../../../hooks/redirect";
 import { useJwt } from "../../../stores/jwt";
@@ -86,98 +86,110 @@ function Perfil(): React.ReactElement {
   }, [proveedor]);
   return (
     <>
-      <Modal
-        open={modals.image}
-        title="Actualizar Imagen"
-        size="sm"
-        onClose={() => setModals({ ...modals, image: false })}
-        onSave={() => {
-          imageForm.handleSubmit((data) => {
-            console.log(data);
-            imageProveedorMutation.mutate({
-              image: data.image,
-            });
-          })();
-        }}
-      >
-        <PerfilImageForm form={imageForm} />
-      </Modal>
-      <Container>
-        {alerta.edit && (
-          <Alert
-            onClose={() => {
-              setAlerta({ ...alerta, edit: false });
+      {proveedor !== undefined && (
+        <>
+          <Modal
+            open={modals.image}
+            title="Actualizar Imagen"
+            size="sm"
+            onClose={() => setModals({ ...modals, image: false })}
+            onSave={() => {
+              imageForm.handleSubmit((data) => {
+                console.log(data);
+                imageProveedorMutation.mutate({
+                  image: data.image,
+                });
+              })();
             }}
           >
-            Datos Actualizados Con Exito
-          </Alert>
-        )}
-        <Grid container sx={{ padding: 5 }} spacing={5}>
-          <Grid item xs={4}>
-            <Paper
-              elevation={5}
-              sx={{
-                width: "100%",
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
-                paddingY: 5,
-                flexDirection: "column",
-              }}
-            >
-              <CardMedia
-                sx={{ height: 240, width: 240, borderRadius: "50%" }}
-                image={"https://picsum.photos/200/300"}
-                title={"logo"}
-              />
-              <Button
-                sx={{
-                  backgroundColor: "#EF2F29",
-                  paddingY: 1.5,
-                  borderRadius: 5,
-                  marginTop: 3,
-                  "&:hover": {
-                    backgroundColor: "#801512",
-                  },
+            <PerfilImageForm form={imageForm} />
+          </Modal>
+          <Container>
+            {alerta.edit && (
+              <Alert
+                onClose={() => {
+                  setAlerta({ ...alerta, edit: false });
                 }}
-                onClick={() => setModals({ ...modals, image: true })}
-                variant="contained"
               >
-                Actualizar Imagen
-              </Button>
-            </Paper>
-          </Grid>
-          <Grid item xs={8} sx={{ textAlign: "center" }}>
-            <Paper
-              elevation={5}
-              sx={{
-                display: "flex",
-                flexDirection: "column",
-                width: "100%",
-                padding: 3,
-              }}
-            >
-              <PerfilUpdateForm
-                form={updateForm}
-                onsubmitForm={() => {
-                  updateForm.handleSubmit((data) => {
-                    crearProductoMutation.mutate({
-                      nombre: data.name,
-                      telefono: data.cellphone,
-                      direccion: data.address,
-                      ciudad: data.city,
-                      codigoPostal: data.cp,
-                      estado: data.state,
-                      coordY: data.latitud,
-                      coordX: data.longitud,
-                    });
-                  })();
-                }}
-              />
-            </Paper>
-          </Grid>
-        </Grid>
-      </Container>
+                Datos Actualizados Con Exito
+              </Alert>
+            )}
+            <Grid container sx={{ padding: 5 }} spacing={5}>
+              <Grid item xs={4}>
+                <Paper
+                  elevation={5}
+                  sx={{
+                    width: "100%",
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    paddingY: 5,
+                    flexDirection: "column",
+                  }}
+                >
+                  <Box
+                    component={"img"}
+                    sx={{ height: 240, width: 240, borderRadius: "50%" }}
+                    src={
+                      proveedor.profilePic === "algo/Ruta" ||
+                      proveedor.profilePic === "" ||
+                      proveedor.profilePic === null ||
+                      proveedor.profilePic === undefined
+                        ? "https://picsum.photos/200/300"
+                        : `http://localhost:3000${proveedor.profilePic}`
+                    }
+                    crossOrigin="anonymous"
+                  />
+                  <Button
+                    sx={{
+                      backgroundColor: "#EF2F29",
+                      paddingY: 1.5,
+                      borderRadius: 5,
+                      marginTop: 3,
+                      "&:hover": {
+                        backgroundColor: "#801512",
+                      },
+                    }}
+                    onClick={() => setModals({ ...modals, image: true })}
+                    variant="contained"
+                  >
+                    Actualizar Imagen
+                  </Button>
+                </Paper>
+              </Grid>
+              <Grid item xs={8} sx={{ textAlign: "center" }}>
+                <Paper
+                  elevation={5}
+                  sx={{
+                    display: "flex",
+                    flexDirection: "column",
+                    width: "100%",
+                    padding: 3,
+                  }}
+                >
+                  <PerfilUpdateForm
+                    form={updateForm}
+                    onsubmitForm={() => {
+                      updateForm.handleSubmit((data) => {
+                        crearProductoMutation.mutate({
+                          nombre: data.name,
+                          telefono: data.cellphone,
+                          direccion: data.address,
+                          ciudad: data.city,
+                          codigoPostal: data.cp,
+                          estado: data.state,
+                          coordY: data.latitud,
+                          coordX: data.longitud,
+                        });
+                      })();
+                    }}
+                  />
+                </Paper>
+              </Grid>
+            </Grid>
+          </Container>
+        </>
+      )}
     </>
   );
 }

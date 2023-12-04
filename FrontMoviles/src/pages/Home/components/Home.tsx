@@ -1,6 +1,6 @@
 import React from "react";
 import Container from "../../../components/common/Container";
-import { Box, Typography } from "@mui/material";
+import { Box, Button, Typography } from "@mui/material";
 import useAuthRedirect from "../../../hooks/redirect";
 import HomeImage from "../../../assets/HomeImage.png";
 
@@ -18,9 +18,23 @@ function Home(): React.ReactElement {
           backgroundSize: "cover",
           backgroundPosition: "center",
           height: "100vh",
+          flexDirection: "column",
         }}
       >
-        <Typography variant="h6">Bienvenido a PonyFood</Typography>
+        <Typography
+          variant="h6"
+          sx={{
+            paddingTop: 2,
+            fontSize: "30px",
+            fontWeight: "bold",
+            backgroundColor: "rgba(255, 255, 255, 0.2)",
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
+          Bienvenido a PonyFood
+        </Typography>
       </Box>
     </Container>
   );

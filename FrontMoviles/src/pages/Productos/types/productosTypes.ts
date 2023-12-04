@@ -1,4 +1,10 @@
-export type { CrearProducto, CategoriaProducto, Producto, ActualizarProducto };
+export type {
+  CrearProducto,
+  CategoriaProducto,
+  Producto,
+  ActualizarProducto,
+  ImagenProducto,
+};
 
 interface CrearProducto {
   nombre: string;
@@ -34,4 +40,9 @@ interface Producto {
   idProveedor: string;
   idCategoria: number;
   imagen: string;
+}
+
+interface ImagenProducto {
+  id: number;
+  image: File | null;
 }
