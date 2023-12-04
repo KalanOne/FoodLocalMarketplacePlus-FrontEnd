@@ -17,7 +17,7 @@ interface ResenaCardProps {
 
 function ResenaCard({ resena }: ResenaCardProps): React.ReactElement {
   const usuarioQuery = useQuery({
-    queryKey: ["usuario"],
+    queryKey: ["usuario", resena.idUsuario],
     queryFn: async () => {
       return await getUsuario(resena.idUsuario);
     },
