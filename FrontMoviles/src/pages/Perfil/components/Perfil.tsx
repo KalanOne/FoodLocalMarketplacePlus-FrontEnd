@@ -33,6 +33,7 @@ import {
   imageProveedorSchema,
 } from "../validation/imagenProveedor";
 import PerfilImageForm from "./PerfilImageForm";
+import UserDefault from "../../../assets/UserDefault.png";
 
 function Perfil(): React.ReactElement {
   useAuthRedirect({});
@@ -156,7 +157,7 @@ function Perfil(): React.ReactElement {
                       proveedor.profilePic === "" ||
                       proveedor.profilePic === null ||
                       proveedor.profilePic === undefined
-                        ? "https://picsum.photos/200/300"
+                        ? UserDefault
                         : `http://localhost:3000${proveedor.profilePic}`
                     }
                     crossOrigin="anonymous"

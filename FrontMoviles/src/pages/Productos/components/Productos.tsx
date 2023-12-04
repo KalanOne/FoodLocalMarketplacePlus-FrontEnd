@@ -30,6 +30,7 @@ import {
 import ActualizarProductoForm from "./ProductoActualizarForm";
 import { Producto } from "../types/productosTypes";
 import { ScrollToTop } from "../../../utils/ScrollToTop";
+import HomeImage from "../../../assets/HomeImage.png";
 
 function Productos(): React.ReactElement {
   useAuthRedirect({});
@@ -263,7 +264,7 @@ function Productos(): React.ReactElement {
                   producto.imagen === "" ||
                   producto.imagen === null ||
                   producto.imagen === undefined
-                    ? "https://picsum.photos/200/300"
+                    ? HomeImage
                     : `http://localhost:3000${producto.imagen}`
                 }
                 producto={producto}
