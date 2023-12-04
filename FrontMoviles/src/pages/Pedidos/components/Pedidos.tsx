@@ -102,7 +102,7 @@ function Pedidos(): React.ReactElement {
           Pedidos
         </Typography>
         <Grid container spacing={2} sx={{ padding: 4 }}>
-          {pedidos.length > 0 &&
+          {pedidos.length > 0 ? (
             pedidos.map((pedido: any) => (
               <Grid item xs={3} key={pedido.id}>
                 <PedidoCard
@@ -113,7 +113,23 @@ function Pedidos(): React.ReactElement {
                   onEdit={onEditPress}
                 />
               </Grid>
-            ))}
+            ))
+          ) : (
+            <Typography
+              variant="h6"
+              sx={{
+                width: "100%",
+                paddingTop: 2,
+                fontSize: "30px",
+                fontWeight: "bold",
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+            >
+              No Hay Pedidos Registrados
+            </Typography>
+          )}
         </Grid>
       </Container>
     </>

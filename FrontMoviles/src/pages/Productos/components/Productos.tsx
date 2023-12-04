@@ -253,26 +253,43 @@ function Productos(): React.ReactElement {
           Productos
         </Typography>
         <Grid container spacing={2} sx={{ padding: 5 }}>
-          {productos?.map((producto: Producto) => (
-            <Grid item xs={3} key={producto.id}>
-              <ProductCard
-                nombre={producto.nombre}
-                precio={producto.precio}
-                descripcion={producto.descripcion}
-                imagen={
-                  producto.imagen === "algo/Ruta" ||
-                  producto.imagen === "" ||
-                  producto.imagen === null ||
-                  producto.imagen === undefined
-                    ? HomeImage
-                    : `http://localhost:3000${producto.imagen}`
-                }
-                producto={producto}
-                onDelete={onDeletePress}
-                onEdit={onEditPress}
-              />
-            </Grid>
-          ))}
+          {productos.length > 0 ? (
+            productos?.map((producto: Producto) => (
+              <Grid item xs={3} key={producto.id}>
+                <ProductCard
+                  nombre={producto.nombre}
+                  precio={producto.precio}
+                  descripcion={producto.descripcion}
+                  imagen={
+                    producto.imagen === "algo/Ruta" ||
+                    producto.imagen === "" ||
+                    producto.imagen === null ||
+                    producto.imagen === undefined
+                      ? HomeImage
+                      : `http://localhost:3000${producto.imagen}`
+                  }
+                  producto={producto}
+                  onDelete={onDeletePress}
+                  onEdit={onEditPress}
+                />
+              </Grid>
+            ))
+          ) : (
+            <Typography
+              variant="h6"
+              sx={{
+                width: "100%",
+                paddingTop: 2,
+                fontSize: "30px",
+                fontWeight: "bold",
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+            >
+              No Hay Productos Registrados
+            </Typography>
+          )}
         </Grid>
         <AddFab onClick={() => setModals({ ...modals, add: true })} />
       </Container>

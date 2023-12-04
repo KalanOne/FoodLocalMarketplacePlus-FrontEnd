@@ -35,11 +35,28 @@ function Resena(): React.ReactElement {
         Reseñas
       </Typography>
       <Grid container spacing={2} sx={{ padding: 5 }}>
-        {resenas?.map((resena: any) => (
-          <Grid item xs={3} key={resena.id}>
-            <ResenaCard resena={resena} />
-          </Grid>
-        ))}
+        {resenas.length ? (
+          resenas?.map((resena: any) => (
+            <Grid item xs={3} key={resena.id}>
+              <ResenaCard resena={resena} />
+            </Grid>
+          ))
+        ) : (
+          <Typography
+            variant="h6"
+            sx={{
+              width: "100%",
+              paddingTop: 2,
+              fontSize: "30px",
+              fontWeight: "bold",
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+          >
+            No Hay Reseñas De Este Producto
+          </Typography>
+        )}
       </Grid>
     </Container>
   );
